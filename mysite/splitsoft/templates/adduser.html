@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %} {{ title }} {% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/group-custom.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<br>
+<h3 class="text-center">{{ group.name }}</h3>
+<br>
+<div class="grid-container">
+    <h5 class="text-center">Add member to group</h5>
+    <br>
+<form action="" method="POST">
+    {% csrf_token %}
+    <input name="search" type="text" placeholder="Enter Name">
+    <input class="button secondary" type="submit" value="Search">
+    <a class="button secondary" href="/group/{{ group.id }}">Cancel</a>
+</form>
+<ul class="callout secondary no-bullet">
+    {% for user in querylist %}
+    <li>{{ user.fName }} {{ user.lName }} <a href="add/{{ user.id }}">Add</a></li>
+    {% endfor %}
+</ul>
+
+</div>
+{% endblock %}

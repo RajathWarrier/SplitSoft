@@ -1,0 +1,9 @@
+.button {
+    border-radius: 20px;
+}
+.delete-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 10px;
+}

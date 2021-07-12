@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/group-custom.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="callout secondary">
+    <!-- Content section -->
+    <div class="grid-x grid-padding-x-up-3 grid-margin-x small-up-3 medium-up-3 large-up-3">
+        <div class="cell">
+            <h4>{{ group.name }}</h4>
+            <ul class="no-bullet">
+                {% for user in group.user_set.all %}
+                <li>{{ user.fName }} <a href="{{ group.id }}/remove/{{ user.id }}">Remove</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="cell">
+            <h5>Total expenditure</h5>
+            <h3>${{ group.total_expense }}</h3>
+            <br>
+        </div>
+        <div class="cell"></div>
+    </div>
+    <!-- Buttons section -->
+    <div class="grid-x grid-padding-x-up-3 grid-margin-x small-up-3 medium-up-3 large-up-3">
+        <div class="cell"><a class="button secondary" href="{{ group.id }}/add">+ Add Member</a></div>
+        <div class="cell"><a class="button secondary" href="{{ group.id }}/addexpense">+ Add Expense</a>
+            <a class="button secondary" href="{{ group.id }}/expenses">Show Expenses</a>
+        </div>
+        <div class="cell">
+            <ul class="no-bullet buttons-container">
+                <li><a class="button secondary" href="{{ group.id }}/split">Show Split</a> <a class="button secondary"
+                        href="chat/{{ groupName }}">Chat</a>
+                </li>
+                <li><a class="button secondary" href="/dashboard">← Dashboard</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

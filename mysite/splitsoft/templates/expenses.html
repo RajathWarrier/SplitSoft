@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %} {{ title }} {% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/expenses-custom.css' %}">
+{% endblock %}
+
+{% block content %}
+<br>
+<h3 class="text-center">Group Expenses</h3>
+<br>
+<div class="grid-container">
+    <ul class="no-bullet">
+        {% for expense in expenses %}
+        <li><div class="callout secondary small">
+            <h5>{{ expense }}</h5>
+            <h6><em>Paid by {{ expense.payer.fName }}</em></h6>
+            <div class="delete-container"><a href="deleteexpense/{{ expense.id }}">Delete</a></div>
+        </div></li>
+        {% endfor %}
+    </ul>
+    <a class="button secondary" href="/group/{{ group_id }}">Back</a>
+</div>
+{% endblock %}

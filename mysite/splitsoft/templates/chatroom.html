@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %} {{ title }} {% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/chatroom-custom.css' %}">
+{% endblock %}
+
+{% block content %}
+
+{{ room_name|json_script:"room-name" }}
+{{ user.fName|json_script:"user-name" }}
+<h3 class="text-center">Group Chat</h3>
+<div class="grid-container">
+    <textarea class="chat" id="chat-text" cols="80" rows="20"></textarea>
+    <input class="chat" id="input" type="text" size="80">
+    <input class="button secondary" id="submit" type="button" value="Send">
+    <a href="/group/{{ gid }}" class="button secondary">Exit</a>
+</div>
+{% endblock %}
+
+{% block script%}
+<script>
+    const roomName = JSON.parse(document.getElementById('room-name').textContent);
+    const userName = JSON.parse(document.getElementById('user-name').textContent);
+
+
+    document.querySelector('#submit').onclick = function (e) {
+        const messageInputDom = document.querySelector('#input');
+        const message = messageInputDom.value;
+        chatsocket.send(JSON.stringify({
+            'message': message,
+            'username': userName,
+        }));
+        messageInputDom.value = '';
+    };
+
+    const chatsocket = new WebSocket(
+        'ws://' +
+        window.location.host +
+        '/group' +
+        '/ws/chat/' +
+        roomName +
+        '/'
+    );
+
+    chatsocket.onmessage = function (e) {
+        const data = JSON.parse(e.data);
+        if (data.username != undefined && data.message != undefined) {
+            document.querySelector('#chat-text').value += (data.username + ': ' + data.message + '\n')
+        }
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %} {{ title }} {% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/dashboard-custom.css' %}">{% endblock %}
+
+{% block content %}
+
+<br>
+<div class="grid-x grid-padding-x">
+    <!-- Group Cards Section -->
+    <div class="cell small-12 medium-12 large-8">
+        <div class="grid-container">
+            <h3>My Groups</h3>
+            <div class="grid-x grid-margin-x small-up-2 medium-up-3">
+                {% for group in grouplist %}
+                <div class="cell">
+                    <a href="/group/{{ group.id }}">
+                        <div class="card">
+                            <div class="card-divider">
+                                <h5>{{ group.name }}</h5>
+                            </div>
+                            <div class="card-section">
+                                <ul class="no-bullet">
+                                    {% for user in group.user_set.all %}
+                                    <li>{{ user.fName }} {{ user.lName }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+                <a href="/newgroup">
+                    <div class="card">
+                        <div class="card-section text-center">
+                            <h4>Start A New Group</h4>
+                            <h1>+</h1>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- My Balances Section -->
+    <div class="cell small-12 medium-12 large-4">
+        <div class="grid-container">
+            <h3>My Balances</h3>
+            <h4>You Owe</h4>
+            {% if owe.count == 0 %}
+            <h5><small><em>Nothing</em></small></h5>
+            {% endif %}
+            {% for item in owe %}
+            <div class="callout alert small">
+                <h5>{{ item.whom.fName }} <small><em>({{ item.group.name }})</em></small></h5>
+                <h6>${{ item.amount }}</h6>
+            </div>
+            {% endfor %}
+            <h4>You Receive</h4>
+            {% if owed.count == 0 %}
+            <h5><small><em>Nothing</em></small></h5>
+            {% endif %}
+            {% for item in owed %}
+            <div class="callout success small">
+                <h5>{{ item.who.fName }} <small><em>({{ item.group.name }})</em></small></h5>
+                <h6>${{ item.amount }}</h6>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

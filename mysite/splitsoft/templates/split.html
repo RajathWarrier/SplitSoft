@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %} {{ title }} {% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/split-custom.css' %}">
+{% endblock %}
+
+{% block content %}
+<br>
+<h3 class="text-center">Group Balances</h3>
+<br>
+<div class="grid-container">
+    {% if split.count == 0 %}
+    <h4 class="text-center"><small><em>All Settled Up!</em></small></h4>
+    {% endif %}
+    <ul class="no-bullet">
+        {% for item in split %}
+        <li>
+            <div class="callout secondary">
+                {{ item.who }} owes {{ item.whom }}
+                <a class="settle" href="settle/{{ item.id }}">Settle</a>
+                <h4>${{ item.amount }}</h4>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    <a class="button secondary" href="/group/{{ group_id }}">Back</a>
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %} {{ title }} {% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/group-custom.css' %}">
+{% endblock %}
+
+{% block content %}
+<br>
+<h3 class="text-center">New Group</h3>
+<br>
+<div class="grid-container">
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ form.groupName.label_tag }}
+        {{ form.groupName}}
+        <label for="users">Select Members (Including Yourself):</label>
+        <select id="users" name="users" multiple>
+            <option value="" disabled selected>Select Member</option>
+            {% for user in users %}
+            <option value="{{ user.id }}">{{ user.fName }} {{user.lName}}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" class="button secondary" value="Add" />
+        <a href="/dashboard" class="button secondary">Cancel</a>
+    </form>
+</div>
+
+{% endblock %}

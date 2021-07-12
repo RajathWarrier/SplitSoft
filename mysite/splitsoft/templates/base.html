@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/foundation.css' %}">
+    {% block css %}{% endblock %}
+</head>
+
+<body>
+    <!-- nav-bar -->
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <ul class="menu">
+                <li class="menu-text">SplitSoft</li>
+                {% if request.user.is_authenticated %}
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/logout">Logout</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="top-bar-right">
+            <ul class="menu">
+                <li class="menu-text">{{ request.user.first_name }} {{ request.user.last_name }}</li>
+            </ul>
+        </div>
+    </div>
+    {% block content %}{% endblock %}
+    <script src="{% static 'js/vendor.js' %}"></script>
+    <script src="{% static 'js/foundation.js' %}"></script>
+    {% block script%}{% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,8 @@
+.button {
+    border-radius: 20px;
+}
+.settle {
+    position: absolute;
+    right: 20px;
+    top: 35%;
+}

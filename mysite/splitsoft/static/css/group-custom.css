@@ -1,0 +1,10 @@
+.button {
+    border-radius: 20px;
+}
+.buttons-container {
+    position: absolute;
+    bottom: 0;
+}
+.cell {
+    border-right: 1px dotted #8a8a8a;
+}
