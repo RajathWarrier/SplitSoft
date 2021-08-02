@@ -45,25 +45,19 @@ def newgroupview(request):
     if not request.user.is_authenticated:
         return redirect('/')
     if request.method == "POST":
-        form_instance = forms.AddGroupForm(request.POST)
-        if form_instance.is_valid():
-            groupName = form_instance.cleaned_data.get("groupName")
-            # users = form_instance.cleaned_data.get("users")
-            users = request.POST.getlist('users')
-            userList = []
-            for user_id in users:
-                userList.append(models.User.objects.get(pk = user_id))
-            newGroup = models.Group(name=groupName, total_expense=0)
-            newGroup.save()
-            for user in userList:
-                user.groups.add(newGroup)
-            return redirect("/dashboard")
-    else:
-        form_instance = forms.AddGroupForm(request.POST)
+        groupName = request.POST.get('groupname')
+        users = request.POST.getlist('users')
+        userList = []
+        for user_id in users:
+            userList.append(models.User.objects.get(pk = user_id))
+        newGroup = models.Group(name=groupName, total_expense=0)
+        newGroup.save()
+        for user in userList:
+            user.groups.add(newGroup)
+        return redirect("/dashboard")
     
     context = {
         "title": "SplitSoft - New Group",
-        "form": form_instance,
         "users": models.User.objects.all()
     }
     return render(request, "newgroup.html", context=context)
