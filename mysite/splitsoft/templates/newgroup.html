@@ -14,8 +14,8 @@
 <div class="grid-container">
     <form action="" method="POST">
         {% csrf_token %}
-        {{ form.groupName.label_tag }}
-        {{ form.groupName}}
+        <label for="groupname">Group Name</label>
+        <input type="text" id="groupname" name="groupname" placeholder="Enter Name" required>
         <label for="users">Select Members (Including Yourself):</label>
         <select id="users" name="users" multiple>
             <option value="" disabled selected>Select Member</option>
